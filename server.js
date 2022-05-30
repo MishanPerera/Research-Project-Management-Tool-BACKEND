@@ -13,6 +13,8 @@ const SignUpURL = require('./src/Route/SignUp');
 const SignInURL = require('./src/Route/SignIn');
 // const AppointmentURLs = require('./src/Route/appointment')
 
+const PORT = process.env.PORT || 4000;
+
 let gfs;
 connectDB();
 
@@ -76,7 +78,7 @@ app.use('/',SignUpURL);
 
 // app.use('/',AppointmentURLs);
 
-app.listen('4000',(err)=>{
+app.listen(PORT, (err)=>{
     if(err) console.log("Error ocuured in starting the server:",err)
-    console.log("Server is up and running")
+    console.log(`Server is up and running on port ${PORT}`);
 })
