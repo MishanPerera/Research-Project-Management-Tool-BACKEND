@@ -30,7 +30,7 @@ const studentSchema = new Schema({
         type: String,
         required: true
     },
-    section: {
+    faculty: {
         type: String,
         required: true
     },
