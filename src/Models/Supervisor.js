@@ -26,9 +26,6 @@ const studentSchema = new Schema({
     gender: {
         type: String
     },
-    registrationNumber: {
-        type: String
-    },
     department: {
         type: String,
         required: true
@@ -50,7 +47,7 @@ const studentSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('student',studentSchema)
+module.exports = mongoose.model('supervisor',supervisorSchema)
 
 
 
