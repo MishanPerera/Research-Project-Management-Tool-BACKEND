@@ -7,6 +7,10 @@ const panelSchema = new Schema({
         required:true
     },
 
+    photo:{
+        type:String
+    },
+
     fullName:{
         type: String,
         required:true
