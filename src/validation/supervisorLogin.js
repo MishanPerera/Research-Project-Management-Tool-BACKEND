@@ -16,7 +16,7 @@ const validateSupervisorLoginInput = (data) => {
     }
 
     if (Validator.isEmpty(data.password)) {
-        errors.password = 'Passwordcis required';
+        errors.password = 'Password is required';
     }
 
     return {
