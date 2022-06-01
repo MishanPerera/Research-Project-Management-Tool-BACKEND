@@ -1,3 +1,3 @@
 module.exports = {
-    secretOrKey: 'devkeyforconfig'
+    secretOrKey: 'secret123'
 };
