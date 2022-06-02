@@ -1,28 +1,33 @@
 const express =require('express');
 const router= express.Router();
 const bcrypt =require('bcrypt')
+const jwt = require('jsonwebtoken');
 const User = require('../Models/User');
 
-router.post('/sign-in',(req,res)=>{
+router.post('/sign-in', (req,res)=>{
 
-    const {email , password} = req.body;
+    const {email , role, password} = req.body;
 
-    User.findOne({email})
+    User.findOne({email, role})
     .then(user =>{
-        if(!user) return res.status(400).json({msg : 'User Does not exists'});
+        if(!user) return res.status(401).json({success:false, msg : 'User does not exist'});
 
         //Validate User
         bcrypt.compare(password, user.password)
         .then(isMatch=>{
-            if(!isMatch) return res.status(400).json({ msg : 'Invalid Credentials'});
-                res.json({
-                    token:true,
-                    id:user.id,
-                    name:user.username,
-                    email:user.email,
-                    role:user.role
-                })
+            if(!isMatch) return res.status(401).json({success: false, msg : 'Incorrect password'});
+            const payload = {
+                id:user.id,
             }
+            jwt.sign(payload,"secret",{expiresIn:"1d"},(err,token)=>{
+                if(err) res.status(400).json({err: err})
+                return res.status(200).json({
+                    success: true,
+                    msg: "Login Successfull",
+                    token: token
+                })
+            })
+        }
         );
     }).catch(e => console.log(e))
 })
