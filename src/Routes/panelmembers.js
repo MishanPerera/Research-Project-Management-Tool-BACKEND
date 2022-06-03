@@ -2,7 +2,7 @@ const router = require('express').Router()
 const multer = require('multer')
 const { v4: uuidv4 } = require('uuid')
 let path = require('path');
-let PanelMember = require("../Models/PanelMember")
+let PanelMember = require("../Models/User")
 
 const storage = multer.diskStorage({
     destination:function(req,file, cb){
