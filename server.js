@@ -11,6 +11,7 @@ const app = express();
 const connectDB = require('./src/Config/DB');
 const SignUpURL = require('./src/Route/SignUp');
 const SignInURL = require('./src/Route/SignIn');
+const panelMemberRouter = require('./src/Routes/panelmembers');
 // const AppointmentURLs = require('./src/Route/appointment')
 
 const PORT = process.env.PORT || 4000;
@@ -75,6 +76,7 @@ app.use(cors());
 
 app.use('/',SignInURL);
 app.use('/',SignUpURL);
+app.use('/panel', panelMemberRouter);
 
 // app.use('/',AppointmentURLs);
 
