@@ -88,3 +88,42 @@ app.listen(PORT,(err)=>{
     if(err) console.log("Error ocuured in starting the server:",err)
     console.log(`Server is up and running on port ${PORT}`)
 })
+
+// Download Selected File
+app.get('/file/:filename', (req,res)=>{
+    try {
+        const bucket = new GridFSBucket(conn.db, {
+        bucketName: "uploads",
+    });
+    let downloadStream = bucket.openDownloadStreamByName(req.params.filename);
+    downloadStream.pipe(fs.createWriteStream(`../Download/${req.params.filename.split('+')[1]}`));
+
+    downloadStream.on("data", (data) => {
+        return res.status(200).write(data);
+    });
+    downloadStream.on("error", (err) => {
+        return res.status(404).send({ msg : "Cannot download the File!" , err: err});
+    });
+    downloadStream.on("end", () => {
+        return res.end();
+    });
+    } catch (error) {
+        return res.status(500).send({ msg: error.message});
+    }
+    
+})
+
+// Delete Selected File
+app.delete('/file/:filename', async(req,res) => {
+    try {
+        await gfs.files.deleteOne({filename: req.params.filename})
+        res.status(200).json({msg :`${req.params.filename.split('+')[1]} file deleted successfully`})
+    } catch (error) {
+        res.status(400).json({msg : `Error: ${error}`})
+    }
+})
+
+app.listen(PORT,(err)=>{
+    if(err) console.log("Error ocuured in starting the server:",err)
+    console.log(`Server is up and running on port ${PORT}`)
+})
