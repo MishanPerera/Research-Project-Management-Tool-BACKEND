@@ -57,4 +57,6 @@ router.route('/add').post(upload.single('photo'), (req, res) => {
     }).catch(err => res.status(400).json('Error: ' + err));
 });
 
-module.exports= router
+module.exports= router;
+
+
