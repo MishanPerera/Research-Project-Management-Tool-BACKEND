@@ -11,9 +11,10 @@ require('dotenv').config()
 const app = express();
 
 const connectDB = require('./src/Config/DB');
-const SignUpURL = require('./src/Route/SignUp');
-const SignInURL = require('./src/Route/SignIn');
-const AdminURL = require('./src/Route/Admin');
+const SignUpURL = require('./src/Routes/SignUp');
+const SignInURL = require('./src/Routes/SignIn');
+const AdminURL = require('./src/Routes/Admin');
+const PanelURL = require('./src/Routes/panelmembers');
 
 let gfs;
 connectDB();
@@ -30,6 +31,7 @@ app.use(cors());
 app.use('/',SignInURL);
 app.use('/',SignUpURL);
 app.use('/',AdminURL);
+app.use('/panel',PanelURL);
 
 // Get All Files
 app.get('/files', async (req,res)=>{

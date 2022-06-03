@@ -8,6 +8,7 @@ const User = require('../Models/User');
 
 // Upload File
 router.post('/upload', upload.single('file'), (req, res)=>{
+    console.log(req.body.description)
     if(req.file === undefined){
         return res.json({msg: 'Select a file to Continue'});
     }
