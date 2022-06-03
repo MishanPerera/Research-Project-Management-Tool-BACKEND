@@ -12,15 +12,14 @@ let storage = new GridFsStorage({
         return new Promise((resolve, reject)=>{
             crypto.randomBytes(16, (err, buf)=>{
                 if(match.indexOf(file.mimetype) === -1){
-                    return reject();
+                    return reject('File Type not match');
                 }
                 if(err){
                     return reject(err);
                 }
-                const filename = buf.toString('hex') + path.extname(file.originalname)
+                const filename = buf.toString('hex') + "+" + String(file.originalname).split('.')[0] + path.extname(file.originalname)
                 const fileInfo = {
                     filename: filename,
-                    description: req.body.description,
                     bucketName: 'uploads'
                 }
                 resolve(fileInfo);

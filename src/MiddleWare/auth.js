@@ -1,19 +1,21 @@
 const jwt = require('jsonwebtoken');
-const secret = 'secret123';
+const asyncHandler = require('express-async-handler');
 
-function auth (req,res,next){
-    const token = req.header('x-auth-token');
+const auth = asyncHandler(async(req,res,next)=>{
+    const bearerHeader = req.headers.authorization
+    let token;
 
-    // Check For Token
-    if(!token) res.status(401).json({msg:'No Token, authorization denied'});
-    try{
-        const decoded = jwt.verify(token,secret);
-        // Add user From Payload
-        req.user = decoded;
-        next();
-    }catch(e){
-        res.status(400).json({msg:'Token is not Valid'});
+    if(typeof bearerHeader !== 'undefined' && bearerHeader.startsWith('Bearer')){
+        token = req.headers.authorization.split(' ')[1];
+        
+        jwt.verify(token, process.env.REACT_APP_JWT_SECRET,(err, user)=>{
+            if(err) res.status(403).json({err : err});
+            req.user = user
+            return next();
+        })
+    }else{
+        res.status(403).json({msg:'Token is not Valid'});
     }
-}
+})
 
 module.exports = auth;
