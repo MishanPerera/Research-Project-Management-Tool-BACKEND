@@ -5,6 +5,8 @@ const upload = require('../utils/multer')
 
 const {registerSupervisor, supervisorLogin} = require ('../controller/supervisorController')
 
+
+
 router.post('/supervisorRegister' , registerSupervisor)
 
 
