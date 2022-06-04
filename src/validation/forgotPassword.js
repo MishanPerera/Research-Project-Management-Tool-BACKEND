@@ -2,7 +2,7 @@ const Validator = require('validator');
 const isEmpty = require('./is-empty');
 
 
-const validateUpdateForgotPassword = (data) => {
+const validateUpdatePassword = (data) => {
     let errors = {}
     data.email = !isEmpty(data.email) ? data.email : '';
 
@@ -23,4 +23,4 @@ const validateUpdateForgotPassword = (data) => {
 }
 
 
-module.exports = validateUpdateForgotPassword
+module.exports = validateUpdatePassword
