@@ -163,4 +163,30 @@ router.get('/messages', auth, (req,res)=>{
         else console.log('Error in Retrieving Message Details :'+JSON.stringify(err,undefined,2));
     })
 })
+
+//student - send messages
+
+router.post('/student-message', auth, (req, res)=>{
+    const leaderId= req.user.id;
+    const { message, supervisorId } = req.body;
+
+    const newMessage= new Message({
+        leaderId, 
+        message,
+        supervisorId,
+    });
+    newMessage.save();
+
+    return res.status(200).json({msg : 'Message Delivered'});
+})
+
+//student - get messages
+
+router.get('/message', auth, (req,res)=>{
+	Message.find({leaderId : req.user.id},(err,doc)=>{
+        if(!err) res.send(doc);
+        else console.log('Error in Retrieving Message Details :'+JSON.stringify(err,undefined,2));
+    })
+})
+
 module.exports = router;
