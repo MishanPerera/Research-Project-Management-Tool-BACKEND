@@ -92,4 +92,17 @@ router.get('/groups', auth, (req,res)=>{
     })
 })
 
+//supervisor -  approval
+
+router.put('/add-approve/:id', auth, (req,res)=>{
+    const app = {
+        isApprove : req.body.isApprove,
+    }
+    Topic.findByIdAndUpdate(req.params.id,{$set : app},{new:true},(err,doc)=>{
+        if(!err) res.send(doc)
+        else console.log("Error in Updating Group Details :" +JSON.stringify(err,undefined,2));
+    });
+})
+
+
 module.exports = router;
