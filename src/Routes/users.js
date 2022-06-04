@@ -59,4 +59,13 @@ router.get('/topic', auth, (req,res)=>{
     })
 })
 
+//supervisor - retrieve topics
+
+router.get('/topics', auth, (req,res)=>{
+	Topic.find({supervisorId: req.user.id},(err,doc)=>{
+        if(!err) res.send(doc);
+        else console.log('Error in Retrieving Topic Details :'+JSON.stringify(err,undefined,2));
+    })
+})
+
 module.exports = router;
