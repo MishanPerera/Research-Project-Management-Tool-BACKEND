@@ -126,5 +126,99 @@ module.exports = {
     },
 
 
-    
+    updatePassword: async (req, res, next) => {
+        try {
+            const { errors, isValid } = validateSupervisorUpdatePassword(req.body);
+            if (!isValid) {
+                return res.status(400).json(errors);
+            }
+            const { supervisorID, oldPassword, newPassword, confirmNewPassword } = req.body
+            if (newPassword !== confirmNewPassword) {
+                errors.confirmNewPassword = ' Password mismatch ! Please check again.'
+                return res.status(400).json(errors);
+            }
+            const supervisor = await supervisor.findOne({ supervisorID })
+            const isCorrect = await bcrypt.compare(oldPassword, supervisor.password)
+            if (!isCorrect) {
+                errors.oldPassword = 'Incorrect old Password ! Please check again.';
+                return res.status(404).json(errors);
+            }
+            let hashedPassword;
+            hashedPassword = await bcrypt.hash(newPassword, 10)
+            supervisor.password = hashedPassword;
+            await supervisor.save()
+            res.status(200).json({ message: "Password Updated" })
+        }
+        catch (err) {
+            console.log("Error in updating password", err.message)
+        }
+    },
+
+
+    forgotPassword: async (req, res, next) => {
+        try {
+            const { errors, isValid } = validateUpdateForgotPassword(req.body);
+            if (!isValid) {
+                return res.status(400).json(errors);
+            }
+            const { email } = req.body
+            const supervisor = await Supervisor.findOne({ email })
+            if (!supervisor) {
+                errors.email = "Email Not found, Provide registered email"
+                return res.status(400).json(errors)
+            }
+            function generateOTP() {
+                var digits = '0123456789';
+                let OTP = '';
+                for (let i = 0; i < 6; i++) {
+                    OTP += digits[Math.floor(Math.random() * 10)];
+                }
+                return OTP;
+            }
+            const OTP = await generateOTP()
+            supervisor.otp = OTP
+            await supervisor.save()
+            await sendEmail(supervisor.email, OTP, "OTP")
+            res.status(200).json({ message: "check your email for OTP" })
+            const helper = async () => {
+                supervisor.otp = ""
+                await supervisor.save()
+            }
+            setTimeout(function () {
+                helper()
+            }, 300000);
+        }
+        catch (err) {
+            console.log("Error in sending email", err.message)
+        }
+    },
+
+
+    postOTP: async (req, res, next) => {
+        try {
+            const { errors, isValid } = validateOTP(req.body);
+            if (!isValid) {
+                return res.status(400).json(errors);
+            }
+            const { email, otp, newPassword, confirmNewPassword } = req.body
+            if (newPassword !== confirmNewPassword) {
+                errors.confirmNewPassword = 'Password Mismatch'
+                return res.status(400).json(errors);
+            }
+            const student = await Student.findOne({ email });
+            if (student.otp !== otp) {
+                errors.otp = "Invalid OTP, check your email again"
+                return res.status(400).json(errors)
+            }
+            let hashedPassword;
+            hashedPassword = await bcrypt.hash(newPassword, 10)
+            student.password = hashedPassword;
+            await student.save()
+            return res.status(200).json({ message: "Password Changed" })
+        }
+        catch (err) {
+            console.log("Error in submitting otp", err.message)
+            return res.status(200)
+        }
+    },
 }
