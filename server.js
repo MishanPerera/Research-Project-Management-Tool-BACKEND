@@ -11,6 +11,7 @@ const app = express();
 const connectDB = require('./src/Config/DB');
 const SignUpURL = require('./src/Route/SignUp');
 const SignInURL = require('./src/Route/SignIn');
+const supervisorRouter=require ('./src/Route/superviosrRoute')
 // const AppointmentURLs = require('./src/Route/appointment')
 
 const PORT = process.env.PORT || 4000;
@@ -75,8 +76,9 @@ app.use(cors());
 
 app.use('/',SignInURL);
 app.use('/',SignUpURL);
+app.use('/supervisor', supervisorRouter);
 
-// app.use('/',AppointmentURLs);
+
 
 app.listen(PORT, (err)=>{
     if(err) console.log("Error ocuured in starting the server:",err)
