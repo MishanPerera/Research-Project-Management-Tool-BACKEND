@@ -202,18 +202,18 @@ module.exports = {
             }
             const { email, otp, newPassword, confirmNewPassword } = req.body
             if (newPassword !== confirmNewPassword) {
-                errors.confirmNewPassword = 'Password Mismatch'
+                errors.confirmNewPassword = 'Password Mismatch ! Please check again'
                 return res.status(400).json(errors);
             }
-            const student = await Student.findOne({ email });
-            if (student.otp !== otp) {
-                errors.otp = "Invalid OTP, check your email again"
+            const supervisor = await Supervisor.findOne({ email });
+            if (supervisor.otp !== otp) {
+                errors.otp = "Invalid OTP, check your provided email again"
                 return res.status(400).json(errors)
             }
             let hashedPassword;
             hashedPassword = await bcrypt.hash(newPassword, 10)
-            student.password = hashedPassword;
-            await student.save()
+            supervisor.password = hashedPassword;
+            await supervisor.save()
             return res.status(200).json({ message: "Password Changed" })
         }
         catch (err) {
