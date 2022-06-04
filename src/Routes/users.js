@@ -30,5 +30,26 @@ router.post('/add-group', auth, (req, res)=>{
     }).catch(e => console.log(e))
 })
 
+//student -add Topic
+router.post('/add-topic', auth, (req, res)=>{
+    const leaderId= req.user.id;
+    const { description, supervisorId, name } = req.body;
+
+    Topic.findOne({leaderId}).then(group=>{
+        if(group) return res.status(400).json({msg : 'You have already created a Topic'});
+        
+        const newTopic= new Topic({
+            leaderId, 
+            description,
+            supervisorId,
+            name
+        });
+
+        newTopic.save();
+
+        return res.status(200).json({msg : 'Topic has been created'});
+    }).catch(e => console.log(e))
+})
+
 
 module.exports = router;
