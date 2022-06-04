@@ -132,4 +132,12 @@ router.delete('/delete-group/:id', auth, (req,res)=>{
         else console.log("Error in Deleting Group Details :" +JSON.stringify(err,undefined,2));
     })
 })
+
+//student - delete topic
+router.delete('/delete-topic/:id', auth, (req,res)=>{
+    Topic.findByIdAndDelete(req.params.id,(err,doc)=>{
+        if(!err) res.send(doc);
+        else console.log("Error in Deleting Topic Details :" +JSON.stringify(err,undefined,2));
+    })
+})
 module.exports = router;
