@@ -4,7 +4,7 @@ const path = require("path");
 const { GridFsStorage } = require("multer-gridfs-storage");
 
 let storage = new GridFsStorage({
-    url: 'mongodb://127.0.0.1:27017/devx',
+    url: `mongodb+srv://${process.env.REACT_APP_MONGODB_USERNAME}:${process.env.REACT_APP_MONGODB_SECRET}@cluster0.tg3da.mongodb.net/devx?retryWrites=true&w=majority`,
     options: { useNewUrlParser: true, useUnifiedTopology: true },
     file: (req, file) => {
         const match =["application/vnd.openxmlformats-officedocument.presentationml.presentation","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/pdf"]
