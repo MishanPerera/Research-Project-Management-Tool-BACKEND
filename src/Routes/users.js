@@ -76,4 +76,12 @@ router.get('/get-topics', auth, (req,res)=>{
     })
 })
 
+//student - fetch group details
+router.get('/group', auth, (req,res)=>{
+	Group.find({leaderId : req.user.id},(err,doc)=>{
+        if(!err) res.send(doc);
+        else console.log('Error in Retrieving Group Details :'+JSON.stringify(err,undefined,2));
+    })
+})
+
 module.exports = router;
