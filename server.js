@@ -41,6 +41,10 @@ app.use('/',SignUpURL);
 app.use('/',AdminURL);
 app.use('/',UserURL);
 
+app.get('/run', async(req,res)=>{
+    console.log('hello world!');
+});
+
 // Get All Files
 app.get('/files', async (req,res)=>{
     gfs.files.find().toArray((err,files)=>{
