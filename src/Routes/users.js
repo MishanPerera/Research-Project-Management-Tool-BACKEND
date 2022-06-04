@@ -6,6 +6,9 @@ const User = require('../Models/User');
 const Topic = require('../Models/Topic');
 const Message = require('../Models/Message');
 
+
+//student -add group
+
 router.post('/add-group', auth, (req, res)=>{
     const leaderId= req.user.id;
     const { supervisorId, name , description, members} = req.body;
