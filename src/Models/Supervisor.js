@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
-const studentSchema = new Schema({
+const supervisorSchema = new Schema({
+
     supervisorID: {
             type: String,
             required:true
