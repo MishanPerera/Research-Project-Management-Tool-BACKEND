@@ -2,7 +2,7 @@ const Validator = require('validator');
 const isEmpty = require('./is-empty');
 
 
-const validateStudentUpdatePassword = (data) => {
+const validateSupervisorUpdatePassword = (data) => {
     let errors = {}
     data.oldPassword = !isEmpty(data.oldPassword) ? data.oldPassword : '';
     data.newPassword = !isEmpty(data.newPassword) ? data.newPassword : '';
@@ -36,4 +36,4 @@ const validateStudentUpdatePassword = (data) => {
 }
 
 
-module.exports = validateStudentUpdatePassword
+module.exports = validateSupervisorUpdatePassword
