@@ -68,4 +68,12 @@ router.get('/topics', auth, (req,res)=>{
     })
 })
 
+//panel member - get Topics
+router.get('/get-topics', auth, (req,res)=>{
+	Topic.find((err,doc)=>{
+        if(!err) res.send(doc);
+        else console.log('Error in Retrieving Topic Details :'+JSON.stringify(err,undefined,2));
+    })
+})
+
 module.exports = router;
