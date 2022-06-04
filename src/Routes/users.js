@@ -155,7 +155,24 @@ router.post('/supervisor-message', auth, (req, res)=>{
 
     return res.status(200).json({msg : 'Message Delivered'});
 })
+// --Admin Get Groups
+router.get('/get-groups', auth, (req,res)=>{
+	Group.find((err,doc)=>{
+        if(!err) res.send(doc);
+        else console.log('Error in Retrieving Group Details :'+JSON.stringify(err,undefined,2));
+    })
+})
 
+// --Admin Add Panel Members 
+router.put('/add-panel/:id', auth, (req,res)=>{
+    const app = {
+        panelId : req.body.panelId,
+    }
+    Group.findByIdAndUpdate(req.params.id,{$set : app},{new:true},(err,doc)=>{
+        if(!err) res.send(doc)
+        else console.log("Error in Updating Group Details :" +JSON.stringify(err,undefined,2));
+    });
+})
 //supervisor - get messages
 router.get('/messages', auth, (req,res)=>{
 	Message.find({supervisorId : req.user.id},(err,doc)=>{
