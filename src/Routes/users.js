@@ -51,5 +51,12 @@ router.post('/add-topic', auth, (req, res)=>{
     }).catch(e => console.log(e))
 })
 
+//student -fetch topic details
+router.get('/topic', auth, (req,res)=>{
+	Topic.find({leaderId: req.user.id},(err,doc)=>{
+        if(!err) res.send(doc);
+        else console.log('Error in Retrieving Topic Details :'+JSON.stringify(err,undefined,2));
+    })
+})
 
 module.exports = router;
