@@ -115,4 +115,21 @@ router.put('/add-evaluate/:id', auth, (req,res)=>{
     });
 })
 
+
+//supervisor - delete message
+router.delete('/delete-message/:id', auth, (req,res)=>{
+    Message.findByIdAndDelete(req.params.id,(err,doc)=>{
+        if(!err) res.send(doc);
+        else console.log("Error in Deleting Message Details :" +JSON.stringify(err,undefined,2));
+    })
+})
+
+
+//supervisor - delete group
+router.delete('/delete-group/:id', auth, (req,res)=>{
+    Group.findByIdAndDelete(req.params.id,(err,doc)=>{
+        if(!err) res.send(doc);
+        else console.log("Error in Deleting Group Details :" +JSON.stringify(err,undefined,2));
+    })
+})
 module.exports = router;
