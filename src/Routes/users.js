@@ -84,4 +84,12 @@ router.get('/group', auth, (req,res)=>{
     })
 })
 
+//supervisor - retrieve groups
+router.get('/groups', auth, (req,res)=>{
+	Group.find({supervisorId : req.user.id},(err,doc)=>{
+        if(!err) res.send(doc);
+        else console.log('Error in Retrieving Group Details :'+JSON.stringify(err,undefined,2));
+    })
+})
+
 module.exports = router;
