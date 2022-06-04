@@ -140,4 +140,21 @@ router.delete('/delete-topic/:id', auth, (req,res)=>{
         else console.log("Error in Deleting Topic Details :" +JSON.stringify(err,undefined,2));
     })
 })
+
+//supervisor - post messages
+router.post('/supervisor-message', auth, (req, res)=>{
+    const supervisorId= req.user.id;
+    const { message, leaderId } = req.body;
+
+    const newMessage= new Message({
+        leaderId, 
+        message,
+        supervisorId,
+    });
+    newMessage.save();
+
+    return res.status(200).json({msg : 'Message Delivered'});
+})
+
+
 module.exports = router;
