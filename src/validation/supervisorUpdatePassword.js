@@ -36,4 +36,4 @@ const validateSupervisorUpdatePassword = (data) => {
 }
 
 
-module.exports = validateStudentUpdatePassword
+module.exports = validateSupervisorUpdatePassword
