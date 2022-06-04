@@ -5,18 +5,25 @@ const GroupSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    supervisorId:{
+        type:String,
+    },
+    name:{
+        type:String,
+        required:true
+    },
     description:{
         type:String,
         required:true
     },
-    group:{
+    members:{
         type:Array,
         required:true
     },
-    supervisor:{
-        type:String,
+    isApprove:{
+        type: String,
     },
-    panelmember:{
+    panelId:{
         type: String,
     },
     register_date:{
