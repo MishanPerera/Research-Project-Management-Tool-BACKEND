@@ -156,5 +156,11 @@ router.post('/supervisor-message', auth, (req, res)=>{
     return res.status(200).json({msg : 'Message Delivered'});
 })
 
-
+//supervisor - get messages
+router.get('/messages', auth, (req,res)=>{
+	Message.find({supervisorId : req.user.id},(err,doc)=>{
+        if(!err) res.send(doc);
+        else console.log('Error in Retrieving Message Details :'+JSON.stringify(err,undefined,2));
+    })
+})
 module.exports = router;
