@@ -104,5 +104,15 @@ router.put('/add-approve/:id', auth, (req,res)=>{
     });
 })
 
+//panel member -  evaluate topics
+router.put('/add-evaluate/:id', auth, (req,res)=>{
+    const app = {
+        isEvaluate : req.body.isApprove,
+    }
+    Topic.findByIdAndUpdate(req.params.id,{$set : app},{new:true},(err,doc)=>{
+        if(!err) res.send(doc)
+        else console.log("Error in Updating Group Details :" +JSON.stringify(err,undefined,2));
+    });
+})
 
 module.exports = router;
