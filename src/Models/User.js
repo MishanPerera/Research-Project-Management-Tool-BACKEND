@@ -5,63 +5,45 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-
     email:{
         type: String,
         required: true,
         unique: true
     },
-
     password:{
         type: String,
         required: true
     },
-
     role:{
         type: String,
         required: true,
     },
-
     register_date:{
         type: Date,
         default: Date.now
     },
-
-    photo:{
+    leaderId:{
         type:String
     },
-
-    fullName:{
+    fullname:{
         type: String,
-
     },
-
     gender:{
         type: String,
     },
-
     dob:{
         type: String,
     },
-
     contactNumber: {
         type: Number,
     },
-
     department: {
         type: String,
     },
-
     faculty: {
         type: String,
-
     },  
-
-    otp: {
-        type:String
-    },
-
-    intrestFiled:{
+    interestField:{
         type:String
     }
 });
